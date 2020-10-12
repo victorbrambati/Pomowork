@@ -13,3 +13,8 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const Package = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

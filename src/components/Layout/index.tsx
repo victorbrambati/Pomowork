@@ -1,13 +1,18 @@
 import React from 'react';
 
-import { Container, Wrapper } from './styles';
+import { Container, Wrapper, Package } from './styles';
+import Menu from '../Menu';
 import Task from '../Task';
-
+import Today from '../Today';
 function Layout() {
   return (
     <Container>
       <Wrapper>
-        <Task />
+        <Package>
+          <Menu active="clock" />
+          <Task />
+          <Today />
+        </Package>
       </Wrapper>
     </Container>
   );

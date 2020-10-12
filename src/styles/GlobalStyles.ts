@@ -13,6 +13,7 @@ export default createGlobalStyle`
       max-width: 100vw;
       width: 100%;
       height: 100%;
+      background: var(--primary);
   }
    *, button, input {
        border: 0;
@@ -34,6 +35,7 @@ export default createGlobalStyle`
     --green-background: #29333D;
     --gray: #BDBDBD;
     --gray-background: #3F3C4E;
-    --gray-light: #828282;
+    --gray-dark: #828282;
+    --gray-icon: #6A6874;
   }
 `;

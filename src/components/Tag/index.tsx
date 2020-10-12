@@ -3,7 +3,7 @@ import React from 'react';
 import { Container } from './styles';
 
 export type TagProps = {
-  variant: 'primary' | 'transparent';
+  variant?: 'primary' | 'transparent';
   color: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
 };
 type TextProps = {
