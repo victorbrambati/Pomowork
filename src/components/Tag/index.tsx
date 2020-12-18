@@ -3,16 +3,16 @@ import React from 'react';
 import { Container } from './styles';
 
 export type TagProps = {
-  variant?: 'primary' | 'transparent';
-  color: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
+  tagVariant?: 'primary' | 'transparent';
+  tagColor?: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
 };
-type TextProps = {
-  text: string;
+export type TextProps = {
+  tagText?: string;
 };
-const Tag = ({ color, variant, text }: TagProps & TextProps) => {
+const Tag = ({ tagColor, tagVariant, tagText }: TagProps & TextProps) => {
   return (
-    <Container variant={variant} color={color}>
-      <span>{text}</span>
+    <Container tagVariant={tagVariant} tagColor={tagColor}>
+      <span>{tagText}</span>
     </Container>
   );
 };

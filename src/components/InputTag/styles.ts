@@ -58,11 +58,13 @@ const variants = {
 
 export const Container = styled.div<TagProps>`
   ${({ tagVariant, tagColor }) => css`
+    right: 5px;
     border-radius: 6px;
     height: 24px;
     > span {
       font-size: 12px;
       padding: 6px 8px;
+      outline: none;
       white-space: nowrap;
     }
     ${tagColor && colors[tagColor]};

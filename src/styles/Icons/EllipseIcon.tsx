@@ -15,7 +15,7 @@ const EllipseIcon = (props: React.SVGProps<SVGSVGElement>) => {
         cy="6"
         r="5.3"
         stroke="url(#paint0_radial)"
-        stroke-width="1.4"
+        strokeWidth="1.4"
       />
       <defs>
         <radialGradient
@@ -26,8 +26,8 @@ const EllipseIcon = (props: React.SVGProps<SVGSVGElement>) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(17.1 1.65) rotate(132.769) scale(16.3466)"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="#7012CE" />
+          <stop stopColor="white" />
+          <stop offset="1" />
         </radialGradient>
       </defs>
     </svg>

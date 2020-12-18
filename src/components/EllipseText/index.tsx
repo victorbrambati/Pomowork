@@ -1,20 +1,26 @@
 import React from 'react';
-import EllipseIcon from '../../styles/Icons/EllipseIcon';
 
-import { Container } from './styles';
+import { Container, Icon } from './styles';
 
 export type TextColorProps = {
   textColor: 'white' | 'gray';
+};
+export type IconColor = {
+  iconcolor?: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
 };
 
 type EllipseProps = {
   text: string;
 };
 
-const EllipseText = ({ text, textColor }: EllipseProps & TextColorProps) => {
+const EllipseText = ({
+  text,
+  textColor,
+  iconcolor,
+}: EllipseProps & TextColorProps & IconColor) => {
   return (
     <Container textColor={textColor}>
-      <EllipseIcon />
+      <Icon iconcolor={iconcolor} />
       <span>{text}</span>
     </Container>
   );

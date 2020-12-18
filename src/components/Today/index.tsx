@@ -2,45 +2,37 @@ import React from 'react';
 
 import { Container, Wrapper } from './styles';
 import Card from '../Card';
+import { GlobalContext } from '../../routes';
+
 const Today = () => {
+  const { state } = React.useContext(GlobalContext);
+
   return (
     <Container>
       <Wrapper>
         <h1>Today</h1>
         <button>See All</button>
       </Wrapper>
-      <Card
-        color="gray"
-        icons="Book"
-        textTag2="Marcos 1"
-        textTag="Salmos 26"
-        timer="00:45:32"
-        title="Lendo a Bíblia"
-      />
-      <Card
-        color="green"
-        icons="Workout"
-        textTag2="Perna"
-        textTag="Abdomen"
-        timer="00:45:32"
-        title="Treinando"
-      />
-      <Card
-        color="orange"
-        icons="Code"
-        textTag2="Pomowork"
-        textTag="Commit no Github"
-        timer="04:65:32"
-        title="Projetos"
-      />
-      <Card
-        color="green"
-        icons="Desktop"
-        textTag2="Live do Luke"
-        textTag="Xandão"
-        timer="00:45:32"
-        title="Twitch"
-      />
+      {state.map((e, index) => {
+        const textTag = e.tags.map((e) => e.name);
+        const tagColor = e.tags.map((e) => e.color);
+        return (
+          <Card
+            key={index}
+            id={index}
+            ellipseColor={e.icon.color}
+            tagColor={tagColor[0]}
+            tagColor2={tagColor[1]}
+            tagColor3={tagColor[2]}
+            icons={e.icon.name}
+            textTag3={textTag[2]}
+            textTag2={textTag[1]}
+            textTag={textTag[0]}
+            timer={e.milliseconds}
+            title={e.name}
+          />
+        );
+      })}
     </Container>
   );
 };

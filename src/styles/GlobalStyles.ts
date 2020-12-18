@@ -7,6 +7,9 @@ export default createGlobalStyle`
       box-sizing: border-box;
       
       color: var(--tertiary);
+      ::selection {
+background: --green;
+}
   }
   html, body, #root {
       max-height: 100vh;
@@ -14,12 +17,19 @@ export default createGlobalStyle`
       width: 100%;
       height: 100%;
       background: var(--primary);
+
   }
    *, button, input {
        border: 0;
        background: none;
        font-family: 'Rubik', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+       
    }
+   ::selection {
+     color: var(--tertiary);
+background: var(--primary);
+}
+   
 
    :root {
     --primary: #070417;
@@ -37,5 +47,6 @@ export default createGlobalStyle`
     --gray-background: #3F3C4E;
     --gray-dark: #828282;
     --gray-icon: #6A6874;
+    --dark-blue: #1B143F;
   }
 `;

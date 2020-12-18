@@ -1,28 +1,21 @@
 import React from 'react';
 import Tag, { TagProps } from '../Tag';
 
-import {
-  Container,
-  EllipseIcon,
-  TagsAndPlay,
-  Wrapper,
-  Play,
-  FlexDiv,
-  DesktopIcon,
-  BarbellIcon,
-  CodeIcon,
-  BookIcon,
-} from './styles';
-
-export type IconProps = {
-  icons: 'Desktop' | 'Workout' | 'Code' | 'Book';
-};
+import { Container, TagsAndPlay, Wrapper, Play, FlexDiv } from './styles';
+import EllipseIcon, { EllipseIconProps } from '../EllipseIcon';
+import ScrollContainer from 'react-indiana-drag-scroll';
+import { useTime } from '../../hooks/useTime';
+import { Link } from 'react-router-dom';
 
 type CardProps = TagProps & {
   title: string;
   textTag: string;
   textTag2: string;
-  timer: string;
+  textTag3: string;
+  tagColor2?: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
+  tagColor3?: 'pink' | 'purple' | 'orange' | 'gray' | 'green';
+  timer: number;
+  id: number;
 };
 
 const Card = ({
@@ -30,47 +23,64 @@ const Card = ({
   title,
   textTag,
   textTag2,
+  textTag3,
   timer,
-  color,
-}: CardProps & IconProps) => {
+  ellipseColor,
+  tagColor,
+  tagColor2,
+  tagColor3,
+  id,
+}: CardProps & EllipseIconProps) => {
+  const [hours, minutes, seconds] = useTime(timer);
+
   return (
     <Container>
       <Wrapper>
-        <EllipseIcon icons={icons}>
-          <div>
-            {icons === 'Desktop' && <DesktopIcon />}
-            {icons === 'Workout' && <BarbellIcon />}
-            {icons === 'Code' && <CodeIcon />}
-            {icons === 'Book' && <BookIcon />}
-          </div>
-        </EllipseIcon>
-
+        <EllipseIcon ellipseColor={ellipseColor} icons={icons} />
         <FlexDiv>
           <div>
             <h1>{title}</h1>
-            <span>{timer}</span>
+            <span>
+              {hours < 10 && 0}
+              {hours}:{minutes < 10 && 0}
+              {minutes}:{seconds < 10 && 0}
+              {seconds}
+            </span>
           </div>
 
           <TagsAndPlay>
-            <div>
-              <div>
-                <Tag text={textTag2} color={color} variant="primary" />
-              </div>
+            <ScrollContainer
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              {tagColor && (
+                <Tag
+                  tagText={textTag}
+                  tagColor={tagColor}
+                  tagVariant="primary"
+                />
+              )}
 
-              {icons === 'Desktop' && (
-                <Tag text={textTag} color="purple" variant="primary" />
+              {tagColor2 && textTag2 !== 'Learning ' && (
+                <Tag
+                  tagText={textTag2}
+                  tagColor={tagColor2}
+                  tagVariant="primary"
+                />
               )}
-              {icons === 'Workout' && (
-                <Tag text={textTag} color="orange" variant="primary" />
+              {tagColor3 && textTag3 !== 'Workout ' && (
+                <Tag
+                  tagText={textTag3}
+                  tagColor={tagColor3}
+                  tagVariant="primary"
+                />
               )}
-              {icons === 'Code' && (
-                <Tag text={textTag} color="pink" variant="primary" />
-              )}
-              {icons === 'Book' && (
-                <Tag text={textTag} color="green" variant="primary" />
-              )}
-            </div>
-            <Play />
+            </ScrollContainer>
+            <Link to={`/timer/${id}`}>
+              <Play />
+            </Link>
           </TagsAndPlay>
         </FlexDiv>
       </Wrapper>

@@ -22,34 +22,39 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 14px 58px 14px 58px;
+  @media (min-width: 1000px) {
+    margin: 14px 250px 25px 250px;
+  }
+  @media (min-width: 1700px) {
+    margin: 14px 750px 50px 750px;
+  }
 `;
 
 const iconCSS = css`
   width: 24px;
   height: 24px;
 `;
-const iconActiveCSS = css`
-  width: 24px;
-  height: 24px;
+const bigIconsCSS = css`
+  width: 32px;
+  height: 32px;
 `;
 
 export const ClockActive = styled(TimeCircle)`
-  ${iconActiveCSS}
+  ${iconCSS}
 `;
 export const Clock = styled(Time)`
   ${iconCSS}
 `;
 export const AddActive = styled(AddCircle)`
-  width: 32px;
-  height: 32px;
+  ${bigIconsCSS}
 `;
 export const Addz = styled(Add)`
-  width: 32px;
-  height: 32px;
+  ${bigIconsCSS}
+`;
+
+export const Chart = styled(PieChart)`
+  ${iconCSS}
 `;
 export const ChartActive = styled(PieChartActive)`
-  ${iconActiveCSS}
-`;
-export const Chart = styled(PieChart)`
   ${iconCSS}
 `;
