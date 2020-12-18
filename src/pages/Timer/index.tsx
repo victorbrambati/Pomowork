@@ -38,7 +38,7 @@ const Timer = () => {
   const [time, setTime] = useState(milliseconds);
 
   const [minutesDashboard] = MinutesDashboard(milliseconds - time);
-  const increment = useCallback(() => setTime((time) => time - 1000), []);
+  const increment = useCallback(() => setTime((time) => time - 60000), []);
 
   const [counter, setCounter] = useState(0);
 
@@ -47,7 +47,7 @@ const Timer = () => {
   const actualHours = realActualHours !== 0 ? realActualHours - 1 : 23;
 
   function dashboard() {
-    if (minutesDashboard !== 0) {
+    if (minutesDashboard > 0) {
       productivity.timeTaskTotal[actualHours].timeLog = [
         ...productivity.timeTaskTotal[actualHours].timeLog,
         minutesDashboard,
