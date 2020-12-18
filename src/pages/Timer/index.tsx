@@ -38,7 +38,7 @@ const Timer = () => {
   const [time, setTime] = useState(milliseconds);
 
   const [minutesDashboard] = MinutesDashboard(milliseconds - time);
-  const increment = useCallback(() => setTime((time) => time - 60000), []);
+  const increment = useCallback(() => setTime((time) => time - 1000), []);
 
   const [counter, setCounter] = useState(0);
 
