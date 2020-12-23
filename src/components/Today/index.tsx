@@ -33,6 +33,7 @@ const Today = () => {
           />
         );
       })}
+      <div style={{ marginBottom: 72 }} />
     </Container>
   );
 };

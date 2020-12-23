@@ -15,12 +15,18 @@ import { useParams } from 'react-router-dom';
 import { useTime } from '../../hooks/useTime';
 import { useHistory } from 'react-router-dom';
 
+type IDRouteParams = {
+  id?: string;
+};
+
 const Timer = () => {
-  const { id } = useParams();
+  const { id } = useParams<IDRouteParams>();
   const { state, update } = React.useContext(GlobalContext);
   const { productivity, setProductivity } = React.useContext(
     ProductivityContext
   );
+
+  const ID = id ? Number.parseInt(id, 10) : -1;
 
   function MinutesDashboard(milliseconds: number) {
     const millisecondsForMinutes = milliseconds / 60000;
@@ -32,8 +38,10 @@ const Timer = () => {
     return [minutesDashboard] as const;
   }
 
-  const milliseconds = state[id] ? state[id].milliseconds : 0;
-  const millisecondsInit = state[id] ? state[id].millisecondsInit : 0;
+  const newState = [...state];
+
+  const milliseconds = newState[ID] ? newState[ID].milliseconds : 0;
+  const millisecondsInit = newState[ID] ? newState[ID].millisecondsInit : 0;
 
   const [time, setTime] = useState(milliseconds);
 
@@ -46,15 +54,40 @@ const Timer = () => {
   const realActualHours = actualDate.getHours();
   const actualHours = realActualHours !== 0 ? realActualHours - 1 : 23;
 
+  const [newTimeTaskTotal, setNewTimeTaskTotal] = useState([
+    ...productivity.timeTaskTotal[actualHours].timeLog,
+  ]);
+  const [taskTotal, setTaskTotal] = useState([...productivity.timeTaskTotal]);
+  const [newTimeDuration, setNewTimeDuration] = useState(
+    productivity.timeDuration
+  );
+  const [newTaskCompleted, setNewTaskCompleted] = useState(
+    productivity.TaskCompleted
+  );
+
   function dashboard() {
     if (minutesDashboard > 0) {
-      productivity.timeTaskTotal[actualHours].timeLog = [
+      setNewTimeTaskTotal([
         ...productivity.timeTaskTotal[actualHours].timeLog,
         minutesDashboard,
-      ];
+      ]);
 
-      setProductivity(productivity);
+      setTaskTotal([
+        ...productivity.timeTaskTotal,
+        { timeLog: newTimeTaskTotal },
+      ]);
     }
+
+    if (time < 1000) {
+      setNewTimeDuration(productivity.timeDuration + millisecondsInit);
+      setNewTaskCompleted(productivity.TaskCompleted + 1);
+    }
+
+    setProductivity({
+      timeTaskTotal: taskTotal,
+      TaskCompleted: newTaskCompleted,
+      timeDuration: newTimeDuration,
+    });
   }
 
   function start() {
@@ -66,10 +99,10 @@ const Timer = () => {
   function pause() {
     clearInterval(counter);
 
-    if (state[id]) {
-      state[id].milliseconds = time;
+    if (newState[ID]) {
+      newState[ID].milliseconds = time;
+      update([...newState]);
     }
-    update([...state]);
   }
 
   const [hours, minutes, seconds] = useTime(time);
@@ -84,40 +117,31 @@ const Timer = () => {
   }
 
   function finish() {
-    if (time < 1000) {
-      productivity.timeDuration = millisecondsInit;
-      productivity.TaskCompleted = productivity.TaskCompleted + 1;
-      setProductivity(productivity);
-    }
-    pause();
+    clearInterval(counter);
     dashboard();
+    if (state[ID]) {
+      newState.splice(ID, 1);
+      update([...newState]);
+    }
     history.goBack();
-    state.splice(id, 1);
-    update([...state]);
   }
 
   function zeroPause() {
     clearInterval(counter);
-    if (state[id]) {
-      state[id].milliseconds = time;
+    if (state[ID]) {
+      state[ID].milliseconds = time;
     }
 
     dashboard();
 
     if (time < 1000) {
-      productivity.timeDuration = millisecondsInit;
-      productivity.TaskCompleted = productivity.TaskCompleted + 1;
-      setProductivity(productivity);
-      state.splice(id, 1);
+      newState.splice(ID, 1);
     }
-
-    update([...state]);
   }
 
-  id &&
+  ID &&
     window.addEventListener('popstate', () => {
       zeroPause();
-      console.log('voltou');
     });
 
   useEffect(start, []);
@@ -128,7 +152,7 @@ const Timer = () => {
     document.title = `Pomowork - ${hours < 10 ? '0' : ''}${hours}:${
       minutes < 10 ? '0' : ''
     }${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }, [state, hours, minutes, seconds, id]);
+  }, [hours, minutes, seconds, ID]);
 
   return (
     <Container>
@@ -136,16 +160,16 @@ const Timer = () => {
         <Package>
           <TopMenu
             title="Timer"
-            tagText={state[id] ? state[id].tags[0].name : 'Byeeeee!'}
-            tagColor={state[id] ? state[id].icon.color : 'green'}
+            tagText={newState[ID] ? newState[ID].tags[0].name : 'Byeeeee!'}
+            tagColor={newState[ID] ? newState[ID].icon.color : 'green'}
             tagVariant="transparent"
             end={zeroPause}
           />
           <Content>
             <EllipseText
-              text={state[id] ? state[id].name : 'Nice'}
+              text={newState[ID] ? newState[ID].name : 'Nice'}
               textColor="gray"
-              iconcolor={state[id] ? state[id].icon.color : 'green'}
+              iconcolor={newState[ID] ? newState[ID].icon.color : 'green'}
             />
             <time>
               {hours < 10 && 0}
