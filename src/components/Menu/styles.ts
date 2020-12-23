@@ -11,7 +11,7 @@ export const Container = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 200;
   width: 100%;
   box-shadow: 0px -8px 100px rgba(130, 130, 130, 0.15);
   border-radius: 30px 30px 0px 0px;

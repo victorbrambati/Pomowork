@@ -7,6 +7,7 @@ export const Container = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 `;
 export const Wrapper = styled.div`
   height: 100%;
@@ -47,6 +48,23 @@ export const FinishButton = styled.button`
   outline: none;
   cursor: pointer;
   margin-top: 273px;
+  @media (max-height: 737px) {
+    margin-top: 240px;
+  }
+  @media (max-height: 710px) {
+    margin-top: 220px;
+  }
+  @media (max-height: 695px) {
+    margin-top: 200px;
+  }
+
+  @media (max-height: 665px) {
+    margin-top: 180px;
+  }
+
+  @media (max-height: 635px) {
+    margin-top: 150px;
+  }
 
   > span {
     font-size: 18px;

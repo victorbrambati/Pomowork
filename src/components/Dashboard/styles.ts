@@ -11,6 +11,7 @@ export const Container = styled.div`
   background-color: var(--secondary);
   border-radius: 16px;
   margin-top: 24px;
+  margin-bottom: 72px;
   display: flex;
   flex-direction: column;
 `;
@@ -134,4 +135,3 @@ export const Ball = styled.div`
     background: #ffffff;
   }
 `;
-
